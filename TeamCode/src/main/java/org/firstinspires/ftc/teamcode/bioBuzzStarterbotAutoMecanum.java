@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous
 
 public class bioBuzzStarterbotAutoMecanum extends LinearOpMode {
-//ignore this comment
+//ingnore this comment
 
     @Override
     public void runOpMode() {
