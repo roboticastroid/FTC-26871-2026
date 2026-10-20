@@ -24,13 +24,17 @@ package FtcRobotController;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 /*
  * This file includes a teleop (driver-controlled) file for the goBILDAĀ® StarterBot with Mecanum
@@ -93,11 +97,47 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
     int driveDirection = 1;
     int direction = 0;
 
+
+
+
+    // imu
+    //IMU imu;
+    /*
+    @Override
+    void init() {
+        imu = hardwareMap.get(IMU.class, "imu");
+
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+    }
+*/
+
+
+    IMU imu = hardwareMap.get(IMU.class, "imu");
+
+    IMU.Parameters parameters = new IMU.Parameters(
+            new RevHubOrientationOnRobot(
+                    RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                    RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
+            )
+    );
+
+        imu.initialize(parameters);
+
+    YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+
+    double yaw   = orientation.getYaw(AngleUnit.DEGREES);   // Heading rotation
+    double pitch = orientation.getPitch(AngleUnit.DEGREES); // Front/back tilt
+    double roll  = orientation.getRoll(AngleUnit.DEGREES);  // Side/side tilts
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
+
 
         /*
          * Initialize the hardware variables. Note that the strings used here as parameters
@@ -194,6 +234,8 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
             driveDirection = -1;
         } else if (gamepad1.dpad_up && gamepad1.y) {
             driveDirection = 1;
+        } else if (gamepad1.dpad_left && gamepad.y) {
+            imu.resetYaw();
         }
         
         
@@ -244,6 +286,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         telemetry.addData("Triggers", "left (%.2f), right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
         telemetry.addData("launcher","(%.2f)",launcher.getVelocity());
         telemetry.addData("forward",driveDirection);
+        telemetry.addData("yaw",yaw);
     }
 
     /*
