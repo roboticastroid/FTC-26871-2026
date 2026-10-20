@@ -20,7 +20,7 @@
  *   SOFTWARE.
  */
 
-package FtcRobotController;
+package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
@@ -34,10 +34,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 /*
- * This file includes a teleop (driver-controlled) file for the goBILDAĀ® StarterBot with Mecanum
+ * This file includes a teleop (driver-controlled) file for the goBILDĀ® StarterBot with Mecanum
  * Wheels for the 2026-2027 FIRSTĀ® Tech Challenge. On top of a mecanum wheel drivetrain, it uses
  * one motor driving an intake roller, two servos which pull elements out of corners, and a high-speed
  * launcher motor.
@@ -95,7 +96,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
     double intakePower;
     
     int driveDirection = 1;
-    int direction = 0;
 
 
 
@@ -125,7 +125,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
             )
     );
 
-        imu.initialize(parameters);
+    imu.initialize(parameters);
 
     YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
 
@@ -234,7 +234,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
             driveDirection = -1;
         } else if (gamepad1.dpad_up && gamepad1.y) {
             driveDirection = 1;
-        } else if (gamepad1.dpad_left && gamepad.y) {
+        } else if (gamepad1.dpad_left && gamepad1.y) {
             imu.resetYaw();
         }
         
