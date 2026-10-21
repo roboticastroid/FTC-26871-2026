@@ -94,8 +94,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
     // Create a variable to set to the intake.
     double intakePower;
-    
-    int driveDirection = 1;
 
 
 
@@ -229,15 +227,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      */
     @Override
     public void loop() {
-        
-        if (gamepad1.dpad_down && gamepad1.y) {
-            driveDirection = -1;
-        } else if (gamepad1.dpad_up && gamepad1.y) {
-            driveDirection = 1;
-        } else if (gamepad1.dpad_left && gamepad1.y) {
-            imu.resetYaw();
-        }
-        
+
         
         /*
          * Here we call a function called mecanumDrive. The mecanumDrive function takes the input from
@@ -249,7 +239,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * Note, moving the joystick forward on most gamepads results in a negative signal, so
          * we invert it before passing it to the function.
          */
-        mecanumDrive(-gamepad1.left_stick_y*driveDirection, gamepad1.left_stick_x*driveDirection, gamepad1.right_stick_x);
+        mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -285,7 +275,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f), right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
         telemetry.addData("launcher","(%.2f)",launcher.getVelocity());
-        telemetry.addData("forward",driveDirection);
         telemetry.addData("yaw",yaw);
     }
 
