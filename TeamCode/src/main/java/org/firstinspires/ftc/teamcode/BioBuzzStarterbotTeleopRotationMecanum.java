@@ -125,18 +125,18 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
             )
     );
 
-    imu.initialize(parameters);
 
-    YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
 
-    double yaw   = orientation.getYaw(AngleUnit.DEGREES);   // Heading rotation
-    double pitch = orientation.getPitch(AngleUnit.DEGREES); // Front/back tilt
-    double roll  = orientation.getRoll(AngleUnit.DEGREES);  // Side/side tilts
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
+
+
+
+
+
 
 
         /*
@@ -214,7 +214,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      */
     @Override
     public void init_loop() {
-        
+
     }
 
     /*
@@ -229,6 +229,13 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      */
     @Override
     public void loop() {
+        imu.initialize(parameters);
+
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+
+        double yaw = orientation.getYaw(AngleUnit.DEGREES);
+        double pitch = orientation.getPitch(AngleUnit.DEGREES);
+        double roll = orientation.getRoll(AngleUnit.DEGREES);
         
         if (gamepad1.dpad_down && gamepad1.y) {
             driveDirection = -1;
