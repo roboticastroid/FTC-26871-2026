@@ -256,7 +256,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * Note, moving the joystick forward on most gamepads results in a negative signal, so
          * we invert it before passing it to the function.
          */
-        mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        mecanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -308,11 +308,12 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
         double forward2 = strafe1 * Math.sin(yawRadian) + forward1 * Math.cos(yawRadian);
         double strafe2 = strafe1 * Math.cos(yawRadian) - forward1 * Math.sin(yawRadian);
+        strafe2 = strafe2 *1.1;
 
-        leftFrontPower = forward2 - strafe2 + rotate;
-        rightFrontPower = forward2 + strafe2 - rotate;
-        leftBackPower = forward2 + strafe2 + rotate;
-        rightBackPower = forward2 - strafe2 - rotate;
+        leftFrontPower = forward2 + strafe2 + rotate;
+        rightFrontPower = forward2 - strafe2 - rotate;
+        leftBackPower = forward2 - strafe2 + rotate;
+        rightBackPower = forward2 + strafe2 - rotate;
 
         double max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
         max = Math.max(max, Math.abs(leftBackPower));
