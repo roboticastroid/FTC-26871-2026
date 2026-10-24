@@ -52,7 +52,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  * we will also need to adjust the "PIDF" coefficients with some that are a better fit for our application.
  */
 
-@TeleOp(name = "Mec BioBuzz StarterBot Teleop", group = "StarterBot")
+@TeleOp(name = "Mec BioBuzz StarterBot Teleop orientation", group = "StarterBot")
 //@Disabled
 public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
