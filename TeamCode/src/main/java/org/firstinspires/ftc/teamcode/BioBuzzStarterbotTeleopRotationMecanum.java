@@ -67,6 +67,8 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
     private CRServo rightIntakeServo = null;
     private CRServo windmillServo = null;
 
+    private IMU imu = null;
+
 
     /*
      * These two variables are used to control the velocity of the launcher motor.
@@ -94,8 +96,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
     // Create a variable to set to the intake.
     double intakePower;
-    
-    int driveDirection = 1;
+
 
 
 
@@ -116,14 +117,8 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 */
 
 
-    IMU imu = hardwareMap.get(IMU.class, "imu");
 
-    IMU.Parameters parameters = new IMU.Parameters(
-            new RevHubOrientationOnRobot(
-                    RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-                    RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
-            )
-    );
+
 
 
 
@@ -132,10 +127,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      */
     @Override
     public void init() {
-
-
-
-
 
 
 
@@ -153,6 +144,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
         leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
         rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
+        imu = hardwareMap.get(IMU.class, "imu");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -206,6 +198,18 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         /*
          * Tell the driver that initialization is complete.
          */
+
+
+
+        IMU.Parameters parameters = new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                        RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
+                )
+        );
+
+        imu.initialize(parameters);
+
         telemetry.addData("Status", "Initialized");
     }
 
@@ -229,22 +233,18 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      */
     @Override
     public void loop() {
-        imu.initialize(parameters);
 
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
 
         double yaw = orientation.getYaw(AngleUnit.DEGREES);
         double pitch = orientation.getPitch(AngleUnit.DEGREES);
         double roll = orientation.getRoll(AngleUnit.DEGREES);
-        
-        if (gamepad1.dpad_down && gamepad1.y) {
-            driveDirection = -1;
-        } else if (gamepad1.dpad_up && gamepad1.y) {
-            driveDirection = 1;
-        } else if (gamepad1.dpad_left && gamepad1.y) {
+
+
+        if (gamepad1.dpad_left && gamepad1.y) {
             imu.resetYaw();
         }
-        
+
         
         /*
          * Here we call a function called mecanumDrive. The mecanumDrive function takes the input from
@@ -256,7 +256,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * Note, moving the joystick forward on most gamepads results in a negative signal, so
          * we invert it before passing it to the function.
          */
-        mecanumDrive(-gamepad1.left_stick_y*driveDirection, gamepad1.left_stick_x*driveDirection, gamepad1.right_stick_x);
+        mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -292,7 +292,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f), right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
         telemetry.addData("launcher","(%.2f)",launcher.getVelocity());
-        telemetry.addData("forward",driveDirection);
         telemetry.addData("yaw",yaw);
     }
 
@@ -304,11 +303,16 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
     }
     
 
-    void mecanumDrive(double forward, double strafe, double rotate) {
-        leftFrontPower = forward - strafe + rotate;
-        rightFrontPower = forward + strafe - rotate;
-        leftBackPower = forward + strafe + rotate;
-        rightBackPower = forward - strafe - rotate;
+    void mecanumDrive(double forward1, double strafe1, double rotate) {
+        double yawRadian = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+        double forward2 = strafe1 * Math.sin(yawRadian) + forward1 * Math.cos(yawRadian);
+        double strafe2 = strafe1 * Math.cos(yawRadian) - forward1 * Math.sin(yawRadian);
+
+        leftFrontPower = forward2 - strafe2 + rotate;
+        rightFrontPower = forward2 + strafe2 - rotate;
+        leftBackPower = forward2 + strafe2 + rotate;
+        rightBackPower = forward2 - strafe2 - rotate;
 
         double max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
         max = Math.max(max, Math.abs(leftBackPower));
