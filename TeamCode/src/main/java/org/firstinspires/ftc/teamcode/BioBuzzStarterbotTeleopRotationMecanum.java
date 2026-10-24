@@ -52,7 +52,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  * we will also need to adjust the "PIDF" coefficients with some that are a better fit for our application.
  */
 
-@TeleOp(name = "Mec BioBuzz StarterBot Teleop", group = "StarterBot")
+@TeleOp(name = "Mec BioBuzz StarterBot Teleop orientation", group = "StarterBot")
 //@Disabled
 public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
@@ -94,6 +94,8 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
     // Create a variable to set to the intake.
     double intakePower;
+    
+    int driveDirection = 1;
 
 
 
@@ -254,7 +256,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * Note, moving the joystick forward on most gamepads results in a negative signal, so
          * we invert it before passing it to the function.
          */
-        mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        mecanumDrive(-gamepad1.left_stick_y*driveDirection, gamepad1.left_stick_x*driveDirection, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -290,6 +292,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f), right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
         telemetry.addData("launcher","(%.2f)",launcher.getVelocity());
+        telemetry.addData("forward",driveDirection);
         telemetry.addData("yaw",yaw);
     }
 
