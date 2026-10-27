@@ -80,8 +80,9 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      * in the launch() function to only run the windmill servo when the motor is spinning fast
      * enough to make a successful throw.
      */
+    
     public final int LAUNCHER1_TARGET_VELOCITY = 1275; //lowered from example code
-    public final int LAUNCHER1_MIN_VELOCITY = 1239; //lowered fom example code
+    public final int LAUNCHER1_MIN_VELOCITY = 1230; //lowered fom example code
 
     public final int LAUNCHER2_TARGET_VELOCITY = 1500; //lowered from example code
     public final int LAUNCHER2_MIN_VELOCITY = 1465; //lowered fom example code
@@ -100,9 +101,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
     double intakePower;
 
 
-
-
-
     // imu
     //IMU imu;
     /*
@@ -117,10 +115,6 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         imu.initialize(new IMU.Parameters(orientationOnRobot));
     }
 */
-
-
-
-
 
 
 
@@ -258,6 +252,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * Note, moving the joystick forward on most gamepads results in a negative signal, so
          * we invert it before passing it to the function.
          */
+
         mecanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
