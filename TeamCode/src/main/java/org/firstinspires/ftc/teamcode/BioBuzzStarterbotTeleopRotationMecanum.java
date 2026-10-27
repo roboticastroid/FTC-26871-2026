@@ -80,9 +80,11 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      * in the launch() function to only run the windmill servo when the motor is spinning fast
      * enough to make a successful throw.
      */
-    public final int LAUNCHER_TARGET_VELOCITY = 1300; //lowered from example code
-    public final int LAUNCHER_MIN_VELOCITY = 1250; //lowered fom example code
+    public final int LAUNCHER1_TARGET_VELOCITY = 1275; //lowered from example code
+    public final int LAUNCHER1_MIN_VELOCITY = 1239; //lowered fom example code
 
+    public final int LAUNCHER2_TARGET_VELOCITY = 1500; //lowered from example code
+    public final int LAUNCHER2_MIN_VELOCITY = 1465; //lowered fom example code
 
     /*
      * These four variables store the power we need to apply to the motors. In other cases, we may
@@ -344,8 +346,10 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * holding down the right gamepad. If they are, then we want to start spinning up the launcher.
          * Otherwise, we start spinning the launcher down.
          */
-        if (gamepad1.right_bumper /*&& launcher.getVelocity()*-1 > LAUNCHER_TARGET_VELOCITY*/) {
-            launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+        if (gamepad1.right_bumper) {
+            launcher.setVelocity(LAUNCHER1_TARGET_VELOCITY);
+        } else if (gamepad1.left_bumper) {
+            launcher.setVelocity(LAUNCHER2_TARGET_VELOCITY);
         } else {
             launcher.setVelocity(0);
         }
@@ -357,7 +361,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * add some power to the intake power. This can sometimes help dislodge stuck elements from
          * inside the hopper.
          */
-        if (gamepad1.right_bumper && (launcher.getVelocity()) > LAUNCHER_MIN_VELOCITY) {
+        if ((gamepad1.right_bumper && (launcher.getVelocity()) > LAUNCHER1_MIN_VELOCITY) || gamepad1.left_bumper && (launcher.getVelocity()) > LAUNCHER2_MIN_VELOCITY) {
             windmillServo.setPower(1);
             intakePower += 0.5;
         } else {
