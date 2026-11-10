@@ -305,7 +305,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
 
         double forward2 = strafe1 * Math.sin(yawRadian) + forward1 * Math.cos(yawRadian);
         double strafe2 = strafe1 * Math.cos(yawRadian) - forward1 * Math.sin(yawRadian);
-        strafe2 = strafe2 *1.1;
+        strafe2 = strafe2 * 1.1;
 
         leftFrontPower = forward2 + strafe2 + rotate;
         rightFrontPower = forward2 - strafe2 - rotate;
