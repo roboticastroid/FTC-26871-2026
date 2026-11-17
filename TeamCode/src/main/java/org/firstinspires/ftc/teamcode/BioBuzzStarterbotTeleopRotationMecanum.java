@@ -222,14 +222,15 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
      */
     @Override
     public void start() {
-    }
-    YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
 
-    double yaw = orientation.getYaw(AngleUnit.DEGREES);
-    double pitch = orientation.getPitch(AngleUnit.DEGREES);
-    double roll = orientation.getRoll(AngleUnit.DEGREES);
-    
-    imu.resetYaw();
+        double yaw = orientation.getYaw(AngleUnit.DEGREES);
+        double pitch = orientation.getPitch(AngleUnit.DEGREES);
+        double roll = orientation.getRoll(AngleUnit.DEGREES);
+
+        imu.resetYaw();
+    }
+
     /*
      * Code to run REPEATEDLY after the driver hits START but before they hit STOP
      */

@@ -145,7 +145,7 @@ public class firstTipAuto extends LinearOpMode {
         float gardenDistance1 = 30;
         float gardenDistance2 = 30;
         
-        launch(1200, 5000);
+        launch(1075, 5000);
         // driveStraight(DRIVE_SPEED, 3.0, 0.0);    // Drive Forward 3"
         turnToHeading( TURN_SPEED, park);               // Turn  CW to -90 Degrees
         holdHeading( TURN_SPEED, park, 0.2);   // Hold -90 Deg heading for a 1/2 second
