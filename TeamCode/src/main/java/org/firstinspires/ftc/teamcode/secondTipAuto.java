@@ -152,7 +152,7 @@ public class secondTipAuto extends LinearOpMode {
         driveStraight( TURN_SPEED, 15, 0);
         turnToHeading( TURN_SPEED, park);               // Turn  CW to -90 Degrees
         holdHeading( TURN_SPEED, park, 0.2);   // Hold -90 Deg heading for a 1/2 second
-        driveStraight(DRIVE_SPEED, 50 .0, park);
+        driveStraight(DRIVE_SPEED, 50.0, park);
 
 
     }
