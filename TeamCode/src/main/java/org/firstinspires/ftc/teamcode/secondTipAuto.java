@@ -1,21 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 @Autonomous(name="Example Auto", group="Robot")
 
-public class ExampleAuto extends LinearOpMode {
+public class secondTipAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private IMU             imu         = null;      // Control/Expansion Hub IMU
@@ -141,21 +142,16 @@ public class ExampleAuto extends LinearOpMode {
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
         //distance vars
-        float park = -140;
+        float park = -90;
         float gardenDistance1 = 30;
         float gardenDistance2 = 30;
-        
+        sleep(7000);
         launch(1200, 5000);
         // driveStraight(DRIVE_SPEED, 3.0, 0.0);    // Drive Forward 3"
+
         turnToHeading( TURN_SPEED, park);               // Turn  CW to -90 Degrees
         holdHeading( TURN_SPEED, park, 0.2);   // Hold -90 Deg heading for a 1/2 second
-
-        driveStraight(DRIVE_SPEED, -24.0, park);
-        turnToHeading( TURN_SPEED, park);
-        driveStraight(DRIVE_SPEED, -60.0, park);
-        turnToHeading( TURN_SPEED, 0.0);         
-        holdHeading( TURN_SPEED, 0.0, 0.2);
-        driveStraight(DRIVE_SPEED, 22.0, 0);
+        driveStraight(DRIVE_SPEED, 22.0, park);
         turnToHeading( TURN_SPEED, 90);
 
 
