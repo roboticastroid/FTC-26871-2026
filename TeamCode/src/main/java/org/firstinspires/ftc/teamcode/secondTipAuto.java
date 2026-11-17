@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
-@Autonomous(name="Example Auto", group="Robot")
+@Autonomous(name="Second Tip", group="Robot")
 
 public class secondTipAuto extends LinearOpMode {
 
@@ -145,14 +145,14 @@ public class secondTipAuto extends LinearOpMode {
         float park = -90;
         float gardenDistance1 = 30;
         float gardenDistance2 = 30;
-        sleep(7000);
+        sleep(10000);
         launch(1200, 5000);
         // driveStraight(DRIVE_SPEED, 3.0, 0.0);    // Drive Forward 3"
 
+        driveStraight( TURN_SPEED, 15, 0);
         turnToHeading( TURN_SPEED, park);               // Turn  CW to -90 Degrees
         holdHeading( TURN_SPEED, park, 0.2);   // Hold -90 Deg heading for a 1/2 second
-        driveStraight(DRIVE_SPEED, 22.0, park);
-        turnToHeading( TURN_SPEED, 90);
+        driveStraight(DRIVE_SPEED, 50 .0, park);
 
 
     }
