@@ -229,6 +229,9 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         double roll = orientation.getRoll(AngleUnit.DEGREES);
 
         imu.resetYaw();
+        imu.resetYaw();
+        imu.resetYaw();
+        imu.resetYaw();
     }
 
     /*
@@ -364,7 +367,7 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
          * inside the hopper.
          */
         if ((gamepad1.right_bumper && (launcher.getVelocity()) > LAUNCHER1_MIN_VELOCITY) || gamepad1.left_bumper && (launcher.getVelocity()) > LAUNCHER2_MIN_VELOCITY) {
-            windmillServo.setPower(1);
+            windmillServo.setPower(0.5);
             intakePower += 0.5;
         } else {
             windmillServo.setPower(0);

@@ -302,7 +302,7 @@ public class secondTipAuto extends LinearOpMode {
 
         while (System.currentTimeMillis() < deadline) {
             if (launcher.getVelocity() > launcherMinVelocity) {
-                windmillServo.setPower(-0.5);
+                windmillServo.setPower(-0.25);
                 intake.setPower(0.5);
             } else {
                 windmillServo.setPower(0);
