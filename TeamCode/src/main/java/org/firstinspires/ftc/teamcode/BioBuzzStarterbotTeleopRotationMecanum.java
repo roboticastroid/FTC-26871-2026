@@ -354,7 +354,8 @@ public class BioBuzzStarterbotTeleopRotationMecanum extends OpMode {
         if (gamepad1.right_bumper) {
             launcher.setVelocity(LAUNCHER1_TARGET_VELOCITY);
         } else if (gamepad1.left_bumper) {
-            launcher.setVelocity(LAUNCHER2_TARGET_VELOCITY);
+            launcher.setVelocity(-LAUNCHER1_TARGET_VELOCITY);
+            windmillServo.setPower(-1);
         } else {
             launcher.setVelocity(0);
         }
